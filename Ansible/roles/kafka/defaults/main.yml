@@ -1,0 +1,4 @@
+---
+scala_kafka_version: "2.12-3.7.2"
+kafka_version: "3.7.2"
+kafka_home: "/opt/kafka"

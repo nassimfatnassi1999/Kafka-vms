@@ -1,0 +1,14 @@
+[Unit]
+Description=Apache Kafka Server
+Documentation=http://kafka.apache.org/documentation.html
+
+[Service]
+Type=simple
+User=root
+Environment=KAFKA_HEAP_OPTS="-Xmx512m -Xms512m"
+Environment=KAFKA_OPTS=-javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent.jar=7071:/opt/jmx_exporter/kafka.yml
+ExecStart={{ kafka_home }}/kafka_{{ scala_kafka_version }}/bin/kafka-server-start.sh {{ kafka_home }}/kafka_{{ scala_kafka_version }}/config/server.properties
+ExecStop={{ kafka_home }}/kafka_{{ scala_kafka_version }}/bin/kafka-server-stop.sh
+
+[Install]
+WantedBy=multi-user.target

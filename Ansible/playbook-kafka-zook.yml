@@ -1,0 +1,19 @@
+- name: Deploy Zookeeper and Kafka  
+  hosts: all  
+  become: true  
+  tasks:  
+    - name: Deploy Zookeeper  
+      include_role:  
+        name: zookeeper  
+      when: "'zookeeper' in group_names"  
+
+    - name: Deploy Kafka  
+      include_role:  
+        name: kafka  
+      when: "'kafka_brokers' in group_names"  
+
+- name: Deploy Kafka Exporter  
+  hosts: kafka_brokers  
+  become: true  
+  roles:  
+    - kafka_exporter  

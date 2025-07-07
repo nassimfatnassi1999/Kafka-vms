@@ -1,0 +1,27 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install required dependencies
+  apt:
+    name:
+      - openjdk-11-jdk
+      - curl
+      - wget
+    state: present
+
+- name: Create Zookeeper directory
+  file:
+    path: "{{ zookeeper_home }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Download and extract Zookeeper
+  unarchive:
+    src: "https://archive.apache.org/dist/zookeeper/zookeeper-3.8.4/apache-zookeeper-3.8.4-bin.tar.gz"
+    dest: "{{ zookeeper_home }}"
+    remote_src: yes
+    creates: "{{ zookeeper_home }}/apache-zookeeper-3.8.4-bin"

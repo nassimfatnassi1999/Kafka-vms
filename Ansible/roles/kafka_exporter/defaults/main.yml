@@ -1,0 +1,5 @@
+---
+kafka_exporter_version: "1.7.0"         
+kafka_exporter_install_dir: "/opt/kafka_exporter"  
+kafka_exporter_flags: ""
+kafka_broker_port: 9092                 

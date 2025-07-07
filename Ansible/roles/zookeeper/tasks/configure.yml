@@ -1,0 +1,24 @@
+---
+- name: Configure Zookeeper
+  template:
+    src: zoo.cfg.j2
+    dest: "{{ zookeeper_home }}/apache-zookeeper-3.8.4-bin/conf/zoo.cfg"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create dataDir for Zookeeper
+  file:
+    path: "{{ zookeeper_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Set Zookeeper ID
+  copy:
+    content: "{{ hostvars[inventory_hostname]['zookeeper_id'] }}"
+    dest: "{{ zookeeper_data_dir }}/myid"
+    owner: root
+    group: root
+    mode: '0644'

@@ -1,0 +1,12 @@
+[Unit]
+Description=Apache Zookeeper Server
+After=network.target
+
+[Service]
+Type=forking
+ExecStart={{ zookeeper_home }}/apache-zookeeper-3.8.4-bin/bin/zkServer.sh start
+ExecStop={{ zookeeper_home }}/apache-zookeeper-3.8.4-bin/bin/zkServer.sh stop
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target

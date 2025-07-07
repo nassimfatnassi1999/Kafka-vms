@@ -1,0 +1,2 @@
+---
+zookeeper_id: "{{ hostvars[inventory_hostname]['zookeeper_id'] }}"

@@ -1,0 +1,6 @@
+---
+galaxy_info:
+  author: Nassim Fatnassi Hnifi
+  description: Install and configure Kafka
+  license: MIT
+  min_ansible_version: "2.9"

@@ -1,0 +1,15 @@
+akhq:
+  server:
+    port: 8080
+    access-log: true
+
+  # Connexion à Kafka
+  connections:
+    kafka-cluster:
+      properties:
+        bootstrap.servers: "10.0.1.6:9092" #broker_ip:port
+        security.protocol: PLAINTEXT
+        # sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="user" password="password";
+
+  logging:
+    level: INFO

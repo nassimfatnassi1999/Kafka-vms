@@ -1,0 +1,39 @@
+akhq:
+  server:
+    port: 8080
+    access-log: true
+
+  # Connexion à Kafka
+  connections:
+    kafka-cluster:
+      properties:
+        bootstrap.servers: "10.0.1.6:9092"
+        security.protocol: PLAINTEXT
+        # sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="user" password="password";
+
+  # Authentification AKHQ
+  security:
+    default-group: "reader"
+    groups:
+      admin:
+        roles:
+          - topic/read
+          - topic/insert
+          - topic/delete
+          - topic/config/update
+          - node/read
+          - topic/data/read
+          - topic/data/write
+          - group/read
+          - group/delete
+          - group/offsets/update
+        users:
+          - "admin"
+
+    basic-auth:
+      admin:
+        password: "htgawm@@"
+
+  logging:
+    level: INFO
+

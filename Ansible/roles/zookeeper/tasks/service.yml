@@ -1,0 +1,23 @@
+---
+- name: Create Zookeeper systemd service file
+  template:
+    src: zookeeper.service.j2
+    dest: /etc/systemd/system/zookeeper.service
+
+- name: Reload systemctl daemon
+  command: systemctl daemon-reload
+
+- name: Enable and start Zookeeper service
+  systemd:
+    name: zookeeper
+    enabled: yes
+    state: started
+
+- name: Check if Zookeeper is running
+  command: "{{ zookeeper_home }}/apache-zookeeper-3.8.4-bin/bin/zkServer.sh status"
+  register: zookeeper_status
+  ignore_errors: true
+
+- name: Display Zookeeper status
+  debug:
+    msg: "{{ zookeeper_status.stdout }}"

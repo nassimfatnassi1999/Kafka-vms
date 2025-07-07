@@ -1,0 +1,12 @@
+[Unit]
+Description=Kafka Exporter
+After=network.target
+
+[Service]
+WorkingDirectory={{ kafka_exporter_install_dir }}
+ExecStart={{ kafka_exporter_install_dir }}/kafka_exporter {% for broker in kafka_brokers %}--kafka.server={{ broker }} {% endfor %}
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,25 @@
+---
+- name: Assurer que le répertoire JMX Exporter existe
+  file:
+    path: /opt/jmx_exporter
+    state: directory
+    mode: '0755'
+
+- name: Télécharger le JAR JMX Exporter
+  get_url:
+    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.16.1/jmx_prometheus_javaagent-0.16.1.jar
+    dest: /opt/jmx_exporter/jmx_prometheus_javaagent.jar
+    mode: '0644'
+
+- name: Copier la configuration JMX Exporter pour Kafka
+  copy:
+    src: files/kafka_jmx_exporter.yml
+    dest: /opt/jmx_exporter/kafka.yml
+    mode: '0644'
+
+- name: Mettre à jour le fichier de service Kafka pour inclure JMX Exporter
+  template:
+    src: templates/kafka.service.j2
+    dest: /etc/systemd/system/kafka.service
+    mode: '0644'
+  notify: restart kafka

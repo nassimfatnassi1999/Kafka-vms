@@ -1,0 +1,5 @@
+rules:
+  - pattern: "kafka.server<type=ReplicaManager, name=(.+)-Value><>Value"
+    name: "kafka_replica_manager_$1"
+  - pattern: "kafka.network<type=RequestMetrics, name=RequestsPerSec, request=(.+), version=\\d+><>Count"
+    name: "kafka_requests_per_sec_$1"

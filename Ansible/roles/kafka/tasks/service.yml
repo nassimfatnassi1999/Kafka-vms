@@ -1,0 +1,22 @@
+- name: Change ownership of Kafka directory
+  file:
+    path: "{{ kafka_home }}"
+    owner: root
+    recurse: yes
+
+- name: Create Kafka systemd service file
+  template:
+    src: kafka.service.j2
+    dest: /etc/systemd/system/kafka.service
+  notify:
+    - Reload systemd
+    - Restart kafka
+
+- name: Unmask Kafka service
+  command: systemctl unmask kafka
+
+- name: Enable and start Kafka service
+  systemd:
+    name: kafka
+    enabled: yes
+    state: started

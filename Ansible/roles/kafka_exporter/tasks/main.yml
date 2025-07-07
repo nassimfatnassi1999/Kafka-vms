@@ -1,0 +1,68 @@
+---
+- name: Définir la liste des kafka_brokers
+  set_fact:
+    kafka_brokers: "{{ groups['kafka_brokers'] | map('regex_replace', '$', ':' ~ kafka_broker_port) | list }}"
+  when: groups['kafka_brokers'] is defined
+  
+- name: Débogage des kafka_brokers (facultatif)
+  debug:
+    var: kafka_brokers
+- name: Create directory for kafka_exporter
+  file:
+    path: "{{ kafka_exporter_install_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Create temporary directory
+  tempfile:
+    state: directory
+  register: temp_dir
+
+- name: Download kafka_exporter tar.gz
+  get_url:
+    url: "https://github.com/danielqsj/kafka_exporter/releases/download/v{{ kafka_exporter_version }}/kafka_exporter-{{ kafka_exporter_version }}.linux-amd64.tar.gz"
+    dest: "{{ temp_dir.path }}/kafka_exporter.tar.gz"
+
+- name: Extract kafka_exporter to temporary directory
+  unarchive:
+    src: "{{ temp_dir.path }}/kafka_exporter.tar.gz"
+    dest: "{{ temp_dir.path }}"
+    remote_src: yes
+
+- name: Find kafka_exporter binary
+  find:
+    paths: "{{ temp_dir.path }}"
+    patterns: "kafka_exporter"
+    recurse: yes
+  register: find_result
+
+- name: Ensure exactly one kafka_exporter binary is found
+  assert:
+    that:
+      - find_result.files | length == 1
+    fail_msg: "Expected to find exactly one kafka_exporter binary, but found {{ find_result.files | length }}"
+
+- name: Copy kafka_exporter binary to install directory
+  copy:
+    src: "{{ find_result.files[0].path }}"
+    dest: "{{ kafka_exporter_install_dir }}/kafka_exporter"
+    remote_src: yes
+    mode: '0755'
+
+- name: Remove temporary directory
+  file:
+    path: "{{ temp_dir.path }}"
+    state: absent
+
+- name: Copy systemd service file
+  template:
+    src: kafka_exporter.service.j2
+    dest: /etc/systemd/system/kafka_exporter.service
+  notify: restart kafka_exporter
+
+- name: Enable and start kafka_exporter service
+  systemd:
+    name: kafka_exporter
+    enabled: yes
+    state: started
+    daemon_reload: yes
