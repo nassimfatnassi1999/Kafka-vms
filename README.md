@@ -18,7 +18,7 @@ Ce projet permet de déployer une infrastructure complète Kafka avec :
 
 
 
-# 🔧 Pour exécuter les scripts Terraform, vous devez créer un fichier terraform.tfvars.
+## 🔧 Pour exécuter les scripts Terraform, vous devez créer un fichier terraform.tfvars.
 ```bash
 resource_group_name         = "devoteamResourceGroup"
 virtual_network_name        = "myVNet"
@@ -52,7 +52,7 @@ gateway_subnet_prefix       = "10.0.3.0/24"
 ```
 
 
-# 🚀 Installation d'Ansible
+## 🚀 Installation d'Ansible
 Exécutez les commandes suivantes pour installer Ansible sur votre système Ubuntu :
 ```bash
 #!/bin/bash
@@ -98,7 +98,7 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 ```
-## 🔹Commandes Ansible Utiles
+## 🔹Commandes Docker Utiles
 ```bash
 docker-compose up -d
 docker ps 
@@ -112,7 +112,7 @@ docker log id-container
 sudo scp -i ~/.ssh/id_rsa -r /home/nassim-engineer/Bureau/Architecture-VMs/Ansible/* \
 admin_devoteam@adresse-ip-jumpbox:/home/admin_devoteam
 
-# Transfert des fichiers Docker Compose
+## Transfert des fichiers Docker Compose
 sudo scp -i ~/.ssh/id_rsa -r /home/nassim-engineer/Bureau/Architecture-VMs/Docker-compose/* \
 admin_devoteam@adresse-ip-jumpbox:/home/admin_devoteam
 ```
