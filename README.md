@@ -9,12 +9,9 @@ Ce projet permet de déployer une infrastructure complète Kafka avec :
 
 ## Arborescence du projet
 
-├── terraform-project/
-│ └── Modules et configuration Terraform pour créer l'infrastructure
-├── Ansible/
-│ └── Playbooks et rôles Ansible pour configurer les VM
-└── Dockercompose/
-└── Fichiers Docker Compose pour le monitoring et AKHQ
+├── terraform-project/ → Modules et configuration Terraform pour créer l'infrastructure
+├── Ansible/ → Playbooks et rôles Ansible pour configurer les VMs
+└── Docker-compose/ → Fichiers Docker Compose pour le monitoring et AKHQ
 
 
 
