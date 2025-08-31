@@ -6,6 +6,7 @@ Ce projet permet de déployer une infrastructure complète Kafka avec :
 - 1 VM Zookeeper
 - Monitoring via Prometheus et Grafana
 - Dashboard AKHQ pour Kafka
+![Architecture Kafka + Monitoring](./annexe-vms.png)
 
 ## Arborescence du projet
 ```bash
